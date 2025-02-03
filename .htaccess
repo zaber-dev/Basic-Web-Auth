@@ -1,0 +1,15 @@
+RewriteEngine On
+
+# Redirect .php files to remove the extension
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\s([^\s]+)\.php [NC]
+RewriteRule ^(.*)\.php$ /$1 [R=301,L]
+
+# Internally rewrite requests without .php to their actual .php file
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+# Deny direct access to config.php
+<Files "config.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
